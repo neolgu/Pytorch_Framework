@@ -70,7 +70,7 @@ conda install PyYAML
 pip install "if you want"
 ```
 
-### Config.yaml
+## Config.yaml
 ```yaml
 # data parameters
 dataset_name: dataset
