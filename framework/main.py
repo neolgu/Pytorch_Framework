@@ -1,11 +1,13 @@
-from train_test.train import Trainer
-from train_test.test import Tester
+from scripts import train, test
+import yaml
 
-import torchvision
-import torchvision.transforms as transforms
 
-if __name__ == '__main__':
-    trainer = Trainer("config/config.yaml")
-    trainer.train()
-    # tester = Tester("config/config.yaml", "checkpoint/train/1.tar")
-    # tester.test()
+def get_config(config_path):
+    with open(config_path, 'r') as stream:
+        return yaml.load(stream, Loader=yaml.FullLoader)
+
+
+if __name__ == "__main__":
+    train(config=get_config('./config.yaml'))
+    # test(config=get_config('./config.yaml'))
+
