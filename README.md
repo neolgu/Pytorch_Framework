@@ -12,19 +12,18 @@ It is a framework for easy use of Pytorch. You can simply proceed with training 
 |        |--...
 |    |--model1
 |    |--model2
-|--config
-|    |--config.yaml
 |--data
 |    |--dataset.py
 |    |--transform.py
-|--model
+|--models
 |    |--model1.py
 |    |--model2.py
 |    |--...
-|--train_test
-|    |--train.py
-|    |--test.py
+|--scripts
+|    |--trainer.py
+|    |--tester.py
 |    |--utils.py
+|--config.yaml
 |--main.py
 ```
 
@@ -40,7 +39,7 @@ It is a framework for easy use of Pytorch. You can simply proceed with training 
 - model
 
   This is the directory where model files to be used are collected.
-- train_test
+- scripts
 
   Code for train and test
 - main.py
@@ -73,26 +72,23 @@ pip install "if you want"
 ## Config.yaml
 ```yaml
 # data parameters
-dataset_name: dataset
-dataset_path: dataset location ex) E:\Dataset\archive\trainingSet
+data_path: dataset location ex) E:\Dataset\archive\trainingSet
 save_path: mode save location ex) checkpoint/model0
-resume: True of False (retrain parameter)
-model_name: basemodel (same as model in model.py)
-num_classes: 10 (in img classification)
-epoch: 2
-batch_size: 8
-coder: N9
+resume: False
+model_name: BaseCNN  (same as model in model.py)
+batch_size: 16
+device: cuda ex) cuda, mps, cpu
+
 # training parameters
-cuda: True
-gpu_ids: [0]  # set the GPU ids to use, e.g. [0] or [1, 2]
-num_workers: 16
-lr: 0.0002
+epoch: 3
+lr: 0.0001
 beta1: 0.9
 beta2: 0.999
 e: 1e-08
 print_iter: 1000
+
 # test parameters
-load_path: checkpoint/model1/100.tar # load saved model
+model_path: checkpoint/train/2.pth
 ```
 
 ## Import your Model and Dataloader
@@ -114,14 +110,12 @@ First, copy the py file you want to use to the appropriate location.
 if you want train.
 ```python
 if __name__ == '__main__':
-    trainer = Trainer("config/config.yaml")
-    trainer.train()
+    train(config=get_config('./config.yaml'))
 ```
 if you want test.
 ```python
 if __name__ == '__main__':
-    tester = Tester("config/config.yaml")
-    tester.test()
+    test(config=get_config('./config.yaml'))
 ```
 
 ## Use it however you like
